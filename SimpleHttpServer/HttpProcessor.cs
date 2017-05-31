@@ -15,10 +15,14 @@ namespace SimpleHttpServer.Models
         private IList<Route> routes;
         private HttpRequest request;
         private HttpResponse response;
+        private IDictionary<string, HttpSession> sessions;
 
-        public HttpProcessor(IEnumerable<Route> routes)
+        public HttpProcessor(
+            IEnumerable<Route> routes,
+            IDictionary<string, HttpSession> sessions)
         {
             this.routes = new List<Route>(routes);
+            this.sessions = sessions;
         }
 
         public void HandleClient(TcpClient tcpClient)
@@ -67,6 +71,17 @@ namespace SimpleHttpServer.Models
                 Url = url,
                 Header = header
             };
+
+            if (result.Header.Cookies.Contains("sessionId"))
+            {
+                var sessionId = result.Header.Cookies["sessionId"].Value;
+                result.Session = new HttpSession(sessionId);
+
+                if (this.sessions.ContainsKey(sessionId))
+                {
+                    this.sessions.Add(sessionId, result.Session);
+                }
+            }
 
             Console.WriteLine("-REQUEST-----------------------------");
             Console.WriteLine(result);
@@ -153,11 +168,25 @@ namespace SimpleHttpServer.Models
             //}
             #endregion
 
-
-            // trigger the route handler...
             try
             {
-                return route.Callable(request);
+                HttpResponse response;
+                if (!request.Header.Cookies.Contains("sessionId") || request.Session == null)
+                {
+                    var session = SessionCreator.Create();
+
+                    var sessionCookie = new Cookie("sessionId", $"{session.Id}; HttpOnly path=/");
+                    this.request.Session = session;
+
+                    response = route.Callable(this.request);
+                    response.Header.Cookies.Add(sessionCookie);
+                }
+                else
+                {
+                    response = route.Callable(this.request);
+                }
+
+                return response;
             }
             catch (Exception ex)
             {
@@ -165,7 +194,6 @@ namespace SimpleHttpServer.Models
                 Console.WriteLine(ex.StackTrace);
                 return HttpResponseBuilder.InternalServerError();
             }
-
         }
 
     }

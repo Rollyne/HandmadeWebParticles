@@ -25,6 +25,8 @@ namespace SimpleHttpServer.Models
 
         public string Content { get; set; }
 
+        public HttpSession Session { get; set; }
+
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

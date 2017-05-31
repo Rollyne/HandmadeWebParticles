@@ -10,10 +10,12 @@ namespace SimpleHttpServer.Models
     {
         public HttpServer(int port, IEnumerable<Route> routes)
         {
-            Port = port;
-            Processor = new HttpProcessor(routes);
-            IsActive = true;
+            this.Port = port;
+            this.Sessions = new Dictionary<string, HttpSession>();
+            this.Processor = new HttpProcessor(routes, this.Sessions);
+            this.IsActive = true;
         }
+        public IDictionary<string, HttpSession> Sessions { get; set; }
         public TcpListener Listener { get; private set; }
         public int Port { get; private set; }
         public bool IsActive { get; private set; }

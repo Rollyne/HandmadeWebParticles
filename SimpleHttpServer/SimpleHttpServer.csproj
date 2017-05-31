@@ -50,11 +50,13 @@
     <Compile Include="Models\HttpRequest.cs" />
     <Compile Include="Models\HttpResponse.cs" />
     <Compile Include="HttpServer.cs" />
+    <Compile Include="Models\HttpSession.cs" />
     <Compile Include="Models\Route.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="HttpResponseBuilder.cs" />
     <Compile Include="RouteHandlers\FileSystemRouteHandler.cs" />
     <Compile Include="Utilities\QuickMimeTypeMapper.cs" />
+    <Compile Include="Utilities\SessionCreator.cs" />
     <Compile Include="Utilities\StreamUtils.cs" />
   </ItemGroup>
   <ItemGroup>

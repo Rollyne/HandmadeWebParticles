@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleHttpServer", "SimpleH
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpServerConsole", "HttpServerConsole\HttpServerConsole.csproj", "{6C0C6B05-78FD-410C-8763-B8F3AEE2E290}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMVC.App", "SimpleMVC.App\SimpleMVC.App.csproj", "{81AA7CDB-EEA1-48AD-9D4B-EAAA846DE33E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMVC", "SimpleMVC.App\SimpleMVC.csproj", "{81AA7CDB-EEA1-48AD-9D4B-EAAA846DE33E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
